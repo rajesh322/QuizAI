@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 const Login = () => {
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:3000/auth/google';
+        window.location.href = 'https://coral-app-rgl66.ondigitalocean.app/auth/auth/google';
     };
     useEffect(() => {
         try {

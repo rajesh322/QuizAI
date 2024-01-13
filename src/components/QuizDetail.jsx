@@ -53,7 +53,7 @@ const QuizDetail = () => {
             }, {});
             try {
                 let token = Cookies.get('authToken');
-                const response = await axios.get('http://localhost:3000/profile', {
+                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
                     withCredentials: true,
                     headers: {
                         Authorization: `Bearer ${token}`,
