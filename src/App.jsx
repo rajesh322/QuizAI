@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 import Profile from "./components/Profile.jsx";
 const App = () => {
     return (
-        <Router>
+        <Router basename='/testmindsai'>
             <div>
                 <Navbar/>
                 <div className="container mt-4">
