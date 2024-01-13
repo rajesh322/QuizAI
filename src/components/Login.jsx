@@ -15,7 +15,7 @@ const Login = () => {
             console.log('Token:', token);
             if (token) {
                 // If there's no token, redirect the user to the login page
-                window.location.href = 'http://localhost:5173/create';
+                window.location.href = 'https://testmindsai.tech/create';
             }
         } catch (error) {
             console.error('Error verifying JWT token:', error);

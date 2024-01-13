@@ -11,7 +11,7 @@ const Profile = () => {
             try {
                 let token = Cookies.get('authToken');
                 if (!token) {
-                    window.location.href = 'http://localhost:5173/';
+                    window.location.href = 'https://testmindsai.tech/';
                     throw new Error('No valid JWT token found.');
                 }
                 const response = await axios.get('http://localhost:3000/profile', {
