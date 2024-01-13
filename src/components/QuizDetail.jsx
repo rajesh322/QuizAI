@@ -8,8 +8,8 @@ const QuizDetail = () => {
     const navigate = useNavigate();
     const [quiz, setQuiz] = useState(null);
     const [selectedOptions, setSelectedOptions] = useState({});
+    // eslint-disable-next-line no-unused-vars
     const [submitted, setSubmitted] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
         const fetchQuiz = async () => {
