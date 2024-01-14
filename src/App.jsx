@@ -1,4 +1,4 @@
-import {HashRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import QuizForm from './components/QuizForm';
 import QuizList from './components/QuizList';
 import QuizDetail from './components/QuizDetail';
