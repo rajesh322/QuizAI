@@ -26,7 +26,7 @@ const QuizDetail = () => {
                 console.log('Token:', token);
                 if (!token) {
                     // If there's no token, redirect the user to the login page
-                    window.location.href = 'https://testmindsai.tech/';
+                    window.location.href = 'https://testmindsai.tech';
                     throw new Error('No valid JWT token found.');
                 }
             } catch (error) {
@@ -54,7 +54,7 @@ const QuizDetail = () => {
             }, {});
             try {
                 let token = Cookies.get('authToken');
-                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/profile', {
+                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
                     withCredentials: true,
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ const QuizDetail = () => {
             navigate(`/quiz/${response.data.id}/result`);
         } catch (error) {
             console.error('Error submitting quiz:', error);
-            // Handle errors here
+            // Handle errors here   
         }
     };
 

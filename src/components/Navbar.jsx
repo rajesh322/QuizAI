@@ -47,7 +47,7 @@ function Navbar() {
         Cookies.remove('authToken');
 
         // Redirect the user to the login page
-        window.location.href = 'https://testmindsai.tech/';
+        window.location.href = 'https://testmindsai.tech';
     };
 
     const handleToggleUserMenu = () => {
@@ -82,7 +82,7 @@ function Navbar() {
                             {showUserMenu && (
                                 <div className="dropdown">
                                     <div className={`dropdown-menu ${showUserMenu ? 'show' : ''}`} aria-labelledby="userDropdown">
-                                        <button className="dropdown-item" onClick={() => {window.location.href = 'https://testmindsai.tech/profile'}}>
+                                        <button className="dropdown-item" onClick={() => {window.location.href = 'https://testmindsai.techprofile'}}>
                                             {user.displayName}
                                         </button>
                                         <button className="dropdown-item" onClick={handleLogout}>

@@ -11,7 +11,7 @@ const Profile = () => {
             try {
                 let token = Cookies.get('authToken');
                 if (!token) {
-                    window.location.href = 'https://testmindsai.tech/';
+                    window.location.href = 'https://testmindsai.tech';
                     throw new Error('No valid JWT token found.');
                 }
                 const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
