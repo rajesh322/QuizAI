@@ -1,16 +1,24 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { Agent as HttpAgent } from "http";
+import { Agent as HttpsAgent } from "https";
 import { useHistory } from "react-router-dom";
 import "../css/Login.css";
 
 const Login = () => {
     const history = useHistory();
 
+    // Create HTTP and HTTPS agents with connection pooling
+    const httpAgent = new HttpAgent({ keepAlive: true });
+    const httpsAgent = new HttpsAgent({ keepAlive: true });
+
     const handleGoogleLogin = () => {
-        axios.get("https://coral-app-rgl66.ondigitalocean.app/auth/google", {
+        axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/google', {
             withCredentials: true,
-            credentials: 'include'
+            credentials: 'include',
+            httpAgent, // Include the HTTP agent for connection pooling
+            httpsAgent, // Include the HTTPS agent for connection pooling
         })
             .then(response => {
                 // Handle the response as needed
