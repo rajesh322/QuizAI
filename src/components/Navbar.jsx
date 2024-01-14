@@ -21,7 +21,7 @@ function Navbar() {
                 }
 
                 // Validate the JWT token on the server
-                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
+                const response = await axios.get('http://localhost:3000/profile', {
                     withCredentials: true,
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ function Navbar() {
         Cookies.remove('authToken');
 
         // Redirect the user to the login page
-        window.location.href = 'https://testmindsai.tech/';
+        window.location.href = 'http://localhost:5173/';
     };
 
     const handleToggleUserMenu = () => {
@@ -82,7 +82,7 @@ function Navbar() {
                             {showUserMenu && (
                                 <div className="dropdown">
                                     <div className={`dropdown-menu ${showUserMenu ? 'show' : ''}`} aria-labelledby="userDropdown">
-                                        <button className="dropdown-item" onClick={() => {window.location.href = 'https://testmindsai.tech/profile'}}>
+                                        <button className="dropdown-item" onClick={() => {window.location.href = 'http://localhost:5173/profile'}}>
                                             {user.displayName}
                                         </button>
                                         <button className="dropdown-item" onClick={handleLogout}>

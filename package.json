@@ -1,35 +1,32 @@
 {
-  "name": "quizui",
-  "private": true,
-  "version": "0.0.0",
+  "name": "sample-vite-react",
+  "version": "1.0.2",
   "type": "module",
-  "homepage": "https://tejasvinu.github.io/testmindsai",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "build": "rm -r _static 2>/dev/null; node sammy.js; vite build",
+    "start": "serve -s _static -l tcp://0.0.0.0:$PORT -n",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "predeploy": "vite build",
-    "deploy": "echo testmindsai.tech > ./dist/CNAME && gh-pages -d dist"
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "serve": "^14.2.1",
     "@react-oauth/google": "^0.12.1",
     "axios": "^1.6.5",
     "bootstrap": "^5.3.2",
-    "gh-pages": "^6.1.1",
     "js-cookie": "^3.0.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.55.0",
-    "eslint-plugin-react": "^7.33.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.0.8"
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "vite": "^4.4.5"
   }
 }

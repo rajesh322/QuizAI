@@ -8,8 +8,8 @@ const QuizDetail = () => {
     const navigate = useNavigate();
     const [quiz, setQuiz] = useState(null);
     const [selectedOptions, setSelectedOptions] = useState({});
-    // eslint-disable-next-line no-unused-vars
     const [submitted, setSubmitted] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
         const fetchQuiz = async () => {
@@ -26,13 +26,14 @@ const QuizDetail = () => {
                 console.log('Token:', token);
                 if (!token) {
                     // If there's no token, redirect the user to the login page
-                    window.location.href = 'https://testmindsai.tech/';
+                    window.location.href = 'http://localhost:5173/';
                     throw new Error('No valid JWT token found.');
                 }
             } catch (error) {
                 console.error('Error verifying JWT token:', error);
             }
         };
+
         fetchQuiz();
     }, [id]);
 
@@ -53,7 +54,7 @@ const QuizDetail = () => {
             }, {});
             try {
                 let token = Cookies.get('authToken');
-                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
+                const response = await axios.get('http://localhost:3000/profile', {
                     withCredentials: true,
                     headers: {
                         Authorization: `Bearer ${token}`,
