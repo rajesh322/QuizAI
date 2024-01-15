@@ -63,7 +63,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <h1 className="login-heading">Login</h1>
-            <button className="login-button" onClick={handleGoogleLogin}>
+            <button type="button" className="login-button" onClick={handleGoogleLogin}>
                 Login with Google
             </button>
         </div>
