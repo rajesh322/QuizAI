@@ -1,38 +1,33 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import "../css/Login.css";
+import axios from "axios";
 import { Agent as HttpAgent } from "http";
 import { Agent as HttpsAgent } from "https";
-
+import { useHistory } from "react-router-dom";
+import "../css/Login.css";
 
 const Login = () => {
-    const history = useNavigate();
+    const history = useHistory();
 
-    const handleGoogleLogin = async () => {
-        const httpAgent = new HttpAgent({ keepAlive: true });
-        const httpsAgent = new HttpsAgent({ keepAlive: true });
+    // Create HTTP and HTTPS agents with connection pooling
+    const httpAgent = new HttpAgent({ keepAlive: true });
+    const httpsAgent = new HttpsAgent({ keepAlive: true });
 
-        try {
-            const response = await fetch('https://coral-app-rgl66.ondigitalocean.app/auth/google', {
-                method: 'GET',
-                credentials: 'include',
-                agent: (parsedURL) => parsedURL.protocol === 'http:' ? httpAgent : httpsAgent,
+    const handleGoogleLogin = () => {
+        axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/google', {
+            withCredentials: true,
+            credentials: 'include',
+            httpAgent, // Include the HTTP agent for connection pooling
+            httpsAgent, // Include the HTTPS agent for connection pooling
+        })
+            .then(response => {
+                // Handle the response as needed
+                console.log("Google Login Response:", response.data);
+            })
+            .catch(error => {
+                // Handle errors
+                console.error("Google Login Error:", error);
             });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            // Assuming the response is in JSON format
-            const data = await response.json();
-
-            // Handle the response as needed
-            console.log("Google Login Response:", data);
-        } catch (error) {
-            // Handle errors
-            console.error("Google Login Error:", error);
-        }
     };
 
     const redirectToCreatePage = () => {
