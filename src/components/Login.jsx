@@ -3,11 +3,11 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { Agent as HttpAgent } from "http";
 import { Agent as HttpsAgent } from "https";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
 const Login = () => {
-    const history = useHistory();
+    const history = useNavigate();
 
     // Create HTTP and HTTPS agents with connection pooling
     const httpAgent = new HttpAgent({ keepAlive: true });
