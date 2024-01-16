@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import axios from 'axios';
 
 function Navbar() {
     const [user, setUser] = useState(null);
@@ -21,8 +20,9 @@ function Navbar() {
                 }
 
                 // Validate the JWT token on the server
-                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
-                    withCredentials: true,
+                const response = await fetch('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
+                    method: 'GET',
+                    credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
