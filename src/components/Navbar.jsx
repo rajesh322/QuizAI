@@ -82,7 +82,7 @@ function Navbar() {
                             {showUserMenu && (
                                 <div className="dropdown">
                                     <div className={`dropdown-menu ${showUserMenu ? 'show' : ''}`} aria-labelledby="userDropdown">
-                                        <button className="dropdown-item" onClick={() => {window.location.href = 'https://testmindsai.techprofile'}}>
+                                        <button className="dropdown-item" onClick={() => {window.location.href = 'https://testmindsai.tech/profile'}}>
                                             {user.displayName}
                                         </button>
                                         <button className="dropdown-item" onClick={handleLogout}>
