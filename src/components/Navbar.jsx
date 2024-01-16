@@ -26,7 +26,6 @@ function Navbar() {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
-                    mode: 'no-cors',
                 });
 
                 setUser(response.data.user);
