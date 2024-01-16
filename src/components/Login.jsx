@@ -1,25 +1,13 @@
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
 const Login = () => {
-    const history = useNavigate();
+    const history = useNavigate();  
 
     const handleGoogleLogin = () => {
-        axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/google', {
-            withCredentials: true,
-            credentials: 'include'
-        })
-            .then(response => {
-                // Handle the response as needed
-                console.log("Google Login Response:", response.data);
-            })
-            .catch(error => {
-                // Handle errors
-                console.error("Google Login Error:", error);
-            });
+        window.location.href = 'https://coral-app-rgl66.ondigitalocean.app/auth/google/callback';
     };
 
     const redirectToCreatePage = () => {
