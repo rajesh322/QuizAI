@@ -9,7 +9,7 @@ const Login = () => {
 
         if (token) {
             // Use js-cookie to set the token as a cookie
-            Cookies.set('authToken', token, { expires: 1, path: '/' });
+            Cookies.set('authToken', token, { expires: 1, sameSite:'None', path: '/',secure:true});
 
             // Redirect to the desired location or update state as needed
             // Example: history.push('/dashboard');
