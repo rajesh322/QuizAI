@@ -27,7 +27,7 @@ function Navbar() {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-
+                console.log("response: ",response)
                 setUser(response.data.user);
                 console.log("pic url: ",response.data.user.photos[0].value)
                 console.log('Profile data received:', response.data.user);
