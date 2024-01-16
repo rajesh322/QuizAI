@@ -1,32 +1,28 @@
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import "../css/Login.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Login = () => {
-    const history = useNavigate();  
-
-    const handleGoogleLogin = () => {
-        window.location.href = 'https://coral-app-rgl66.ondigitalocean.app/auth/google';
-    };
-
-    const redirectToCreatePage = () => {
-        history.push('/create');
-    };
-
-    useEffect(() => {
+    const handleGoogleLogin = async () => {
         try {
-            // Check if a JWT token exists in cookies
-            let token = Cookies.get('authToken');
-            console.log('Token:', token);
-            if (token) {
-                // If there's no token, redirect the user to the create page
-                redirectToCreatePage();
+            const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/google');
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
+            const { token } = response.data;
+            
+            // Store the token in localStorage or use as needed
+            localStorage.setItem('authToken', token);
+
+            // Redirect to the desired location or update state as needed
+            // Example: history.push('/dashboard');
         } catch (error) {
-            console.error('Error verifying JWT token:', error);
+            console.error("Google Login Error:", error);
         }
-    }, []);
+    };
+
+    // ... (other code)
 
     return (
         <div className="login-container">
