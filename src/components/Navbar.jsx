@@ -38,7 +38,6 @@ function Navbar() {
                 setLoading(false);
             }
         };
-
         fetchData();
     }, []);
 
