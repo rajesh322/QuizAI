@@ -7,7 +7,7 @@ const Login = () => {
     const history = useNavigate();  
 
     const handleGoogleLogin = () => {
-        window.location.href = 'https://coral-app-rgl66.ondigitalocean.app/auth/google/callback';
+        window.location.href = 'https://coral-app-rgl66.ondigitalocean.app/auth/google';
     };
 
     const redirectToCreatePage = () => {
