@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 const Login = () => {
 
@@ -7,8 +8,8 @@ const Login = () => {
         const token = urlParams.get('token');
 
         if (token) {
-            // Store the token in localStorage or use it as needed
-            localStorage.setItem('authToken', token);
+            // Use js-cookie to set the token as a cookie
+            Cookies.set('authToken', token, { expires: 1, path: '/' });
 
             // Redirect to the desired location or update state as needed
             // Example: history.push('/dashboard');
