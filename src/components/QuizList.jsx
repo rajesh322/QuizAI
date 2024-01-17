@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../css/quizlist.css';
 import Googleads from './googleads';
+import { API_URL } from '../constants';
 
 const QuizList = () => {
     const [quizzes, setQuizzes] = useState([]);
@@ -11,7 +12,7 @@ const QuizList = () => {
     useEffect(() => {
         const fetchQuizzes = async () => {
             try {
-                const response = await axios.get('https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes');
+                const response = await axios.get(API_URL + '/quizzes');
                 setQuizzes(response.data);
             } catch (error) {
                 console.error('Error fetching quizzes:', error);
@@ -25,7 +26,18 @@ const QuizList = () => {
         setSortBy(e.target.value);
     };
 
-    const sortedQuizzes = [...quizzes].sort((a, b) => a[sortBy].localeCompare(b[sortBy]));
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    const sortedQuizzes = [...quizzes].sort((a, b) => {
+        if (sortBy === 'date') {
+            return new Date(a.date) - new Date(b.date);
+        } else {
+            return a[sortBy].localeCompare(b[sortBy]);
+        }
+    });
 
     return (
         <div className="container mt-4">
@@ -35,6 +47,8 @@ const QuizList = () => {
                 <label htmlFor="sortSelect" className="me-2">Sort By:</label>
                 <select id="sortSelect" className="form-select" value={sortBy} onChange={handleSortChange}>
                     <option value="quizName">Quiz Name</option>
+                    <option value="date">Date</option>
+                    <option value="questions">Number of Questions</option>
                     {/* Add more options based on your data structure */}
                 </select>
             </div>
@@ -42,10 +56,13 @@ const QuizList = () => {
             <ul className="list-group">
                 {sortedQuizzes.map((quiz) => (
                     <li key={quiz.id} className="list-group-item d-flex justify-content-between align-items-center">
-                        <Link to={`/quiz/${quiz.id}`} className="text-decoration-none">
-                            {quiz.quizName}
-                        </Link>
-                        {/* Add more details or actions if needed */}
+                        <div>
+                            <Link to={`/quiz/${quiz.id}`} className="text-decoration-none">
+                                {quiz.quizName}
+                            </Link>
+                            <span className='badge bg-primary rounded-pill ms-2'>{quiz.questions.length} Questions</span>
+                        </div>
+                        <span className='badge bg-primary rounded-pill'>{formatDate(quiz.date)}</span>
                     </li>
                 ))}
             </ul>

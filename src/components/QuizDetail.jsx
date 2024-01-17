@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { API_URL } from '../constants';
 
 const QuizDetail = () => {
     const id = useParams().id;
@@ -9,28 +10,17 @@ const QuizDetail = () => {
     const [selectedOptions, setSelectedOptions] = useState({});
     const [submitted, setSubmitted] = useState(false);
     const [userEmail, setUserEmail] = useState('');
+    const [result, setResult] = useState(null);
 
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const response = await axios.get(`https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes/${id}`);
+                const response = await axios.get(API_URL + `/quizzes/${id}`);
                 setQuiz(response.data);
             } catch (error) {
                 console.error('Error fetching quiz:', error);
                 // Handle errors here
             }
-            // try {
-            //     // Check if a JWT token exists in cookies
-            //     let token = Cookies.get('auth_token');
-            //     console.log('Token:', token);
-            //     if (!token) {
-            //         // If there's no token, redirect the user to the login page
-            //         window.location.href = 'https://testmindsai.tech/login';
-            //         throw new Error('No valid JWT token found.');
-            //     }
-            // } catch (error) {
-            //     console.error('Error verifying JWT token:', error);
-            // }
         };
 
         fetchQuiz();
@@ -45,44 +35,22 @@ const QuizDetail = () => {
 
     const handleSubmit = async () => {
         try {
-
             // Convert selectedOptions to the desired format
             let formattedOptions = Object.keys(selectedOptions).reduce((acc, key) => {
                 acc[key] = selectedOptions[key];
                 return acc;
             }, {});
-            // try {
-            //     const storedToken = Cookies.get('auth_token');
-            //     // Check if a JWT token exists in cookies
-            //     if (storedToken) {
-            //         // Use the stored token for API requests
-            //         axios
-            //             .get(`https://openidconnect.googleapis.com/v1/userinfo?access_token=${storedToken}`, {
-            //                 headers: {
-            //                     Authorization: `Bearer ${storedToken}`,
-            //                     Accept: 'application/json'
-            //                 }
-            //             })
-            //             .then((res) => {
-            //                 setUserEmail(res.data.email);
-            //                 console.log(res.data);
-            //             })
-            //             .catch((err) => console.log(err));
-            //     }
-            // } catch (error) {
-            //     console.error('Error fetching user profile:', error);
-            //     // Handle error if needed
-            // } 
             console.log('Submitting quiz:', formattedOptions);
-            const response = await axios.post(`https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes/${quiz?.id}/result`, formattedOptions);
+            const response = await axios.post(API_URL + `/quizzes/${quiz?.id}/result`, formattedOptions);
 
             console.log('Quiz submitted:', response.data);
 
-            // Redirect to the results page using the new quizid
-            navigate(`/quiz/${response.data.id}/result`);
+            // Store the result and set the submitted flag
+            setResult(response.data);
+            setSubmitted(true);
         } catch (error) {
             console.error('Error submitting quiz:', error);
-            // Handle errors here   
+            // Handle errors here
         }
     };
 
@@ -112,7 +80,11 @@ const QuizDetail = () => {
                                             disabled={submitted}
                                         />
                                         <label
-                                            className="form-check-label"
+                                            className={`form-check-label ${
+                                                submitted && option === question.correctOption ? 'text-success' : ''
+                                            } ${
+                                                submitted && option !== question.correctOption ? 'text-danger' : ''
+                                            }`}
                                             htmlFor={`option${index}-${optionIndex}`}
                                         >
                                             {option}
@@ -121,6 +93,11 @@ const QuizDetail = () => {
                                 </div>
                             ))}
                         </div>
+                        {submitted && (
+                            <p className={`mt-2 ${selectedOptions[index] === question.correctOption ? 'text-success' : 'text-danger'}`}>
+                                Your choice: {selectedOptions[index]}
+                            </p>
+                        )}
                     </div>
                 ))}
 
@@ -128,6 +105,15 @@ const QuizDetail = () => {
                     <button type="button" className="btn btn-primary" onClick={handleSubmit}>
                         Submit Quiz
                     </button>
+                )}
+
+                {submitted && (
+                    <div className="mt-3">
+                        <h4>Quiz Result</h4>
+                        <p>
+                            {result.correctAnswers} out of {result.totalQuestions} correct
+                        </p>
+                    </div>
                 )}
             </form>
         </div>

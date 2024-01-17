@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import '../css/quizform.css';
 import Googleads from './googleads';
+import { API_URL } from '../constants';
 
 const QuizForm = () => {
     const [quizName, setQuizName] = useState('');
@@ -55,13 +56,16 @@ const QuizForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
-            const response = await axios.post('https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes', {
+            const currentDateAndTime = new Date(); // Get the current date and time
+            console.log('currentDateAndTime:', currentDateAndTime);
+            const response = await axios.post(API_URL + '/quizzes', {
                 quizName,
                 questions,
+                date: currentDateAndTime.toISOString(), // Convert to ISO format
             });
-
+    
             console.log('Quiz created:', response.data);
             // Handle success, reset the form, or redirect as needed
         } catch (error) {
@@ -81,7 +85,7 @@ const QuizForm = () => {
         console.log('topicValue:', topicValue);
         try {
             // Make an API call with the difficulty and topic
-            const response = await axios.post('https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes/generate', {
+            const response = await axios.post(API_URL + '/quizzes/generate', {
                 difficulty: dropdownValue,
                 topic: topicValue,
             });
@@ -217,7 +221,6 @@ const QuizForm = () => {
 
     return (
         <div className="container mt-4">
-            {/* <Googleads/> */}
             <h2 className="text-center mb-4">Create a New Quiz</h2>
             <div className="mb-3">
                 <ul className="nav nav-tabs">
