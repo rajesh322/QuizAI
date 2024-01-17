@@ -9,20 +9,20 @@ const QuizForm = () => {
     ]);
     const [selectedForm, setSelectedForm] = useState('createQuiz'); // Default to createQuiz form
 
-    useEffect(() => {
-        try {
-            // Check if a JWT token exists in cookies
-            let token = Cookies.get('auth_token');
-            console.log('Token:', token);
-            if (!token) {
-                // If there's no token, redirect the user to the login page
-                window.location.href = 'https://testmindsai.tech/login';
-                throw new Error('No valid JWT token found.');
-            }
-        } catch (error) {
-            console.error('Error verifying JWT token:', error);
-        }
-    }, []);
+    // useEffect(() => {
+    //     try {
+    //         // Check if a JWT token exists in cookies
+    //         let token = Cookies.get('auth_token');
+    //         console.log('Token:', token);
+    //         if (!token) {
+    //             // If there's no token, redirect the user to the login page
+    //             window.location.href = 'https://testmindsai.tech/login';
+    //             throw new Error('No valid JWT token found.');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error verifying JWT token:', error);
+    //     }
+    // }, []);
 
     const handleQuestionChange = (index, field, value) => {
         const updatedQuestions = [...questions];

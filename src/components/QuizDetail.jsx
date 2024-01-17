@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import Cookies from "js-cookie";
-import process from 'process';
 
 const QuizDetail = () => {
     const id = useParams().id;
@@ -21,18 +19,18 @@ const QuizDetail = () => {
                 console.error('Error fetching quiz:', error);
                 // Handle errors here
             }
-            try {
-                // Check if a JWT token exists in cookies
-                let token = Cookies.get('auth_token');
-                console.log('Token:', token);
-                if (!token) {
-                    // If there's no token, redirect the user to the login page
-                    window.location.href = 'https://testmindsai.tech/login';
-                    throw new Error('No valid JWT token found.');
-                }
-            } catch (error) {
-                console.error('Error verifying JWT token:', error);
-            }
+            // try {
+            //     // Check if a JWT token exists in cookies
+            //     let token = Cookies.get('auth_token');
+            //     console.log('Token:', token);
+            //     if (!token) {
+            //         // If there's no token, redirect the user to the login page
+            //         window.location.href = 'https://testmindsai.tech/login';
+            //         throw new Error('No valid JWT token found.');
+            //     }
+            // } catch (error) {
+            //     console.error('Error verifying JWT token:', error);
+            // }
         };
 
         fetchQuiz();
@@ -53,28 +51,28 @@ const QuizDetail = () => {
                 acc[key] = selectedOptions[key];
                 return acc;
             }, {});
-            try {
-                const storedToken = Cookies.get('auth_token');
-                // Check if a JWT token exists in cookies
-                if (storedToken) {
-                    // Use the stored token for API requests
-                    axios
-                        .get(`https://openidconnect.googleapis.com/v1/userinfo?access_token=${storedToken}`, {
-                            headers: {
-                                Authorization: `Bearer ${storedToken}`,
-                                Accept: 'application/json'
-                            }
-                        })
-                        .then((res) => {
-                            setUserEmail(res.data.email);
-                            console.log(res.data);
-                        })
-                        .catch((err) => console.log(err));
-                }
-            } catch (error) {
-                console.error('Error fetching user profile:', error);
-                // Handle error if needed
-            } 
+            // try {
+            //     const storedToken = Cookies.get('auth_token');
+            //     // Check if a JWT token exists in cookies
+            //     if (storedToken) {
+            //         // Use the stored token for API requests
+            //         axios
+            //             .get(`https://openidconnect.googleapis.com/v1/userinfo?access_token=${storedToken}`, {
+            //                 headers: {
+            //                     Authorization: `Bearer ${storedToken}`,
+            //                     Accept: 'application/json'
+            //                 }
+            //             })
+            //             .then((res) => {
+            //                 setUserEmail(res.data.email);
+            //                 console.log(res.data);
+            //             })
+            //             .catch((err) => console.log(err));
+            //     }
+            // } catch (error) {
+            //     console.error('Error fetching user profile:', error);
+            //     // Handle error if needed
+            // } 
             console.log('Submitting quiz:', formattedOptions);
             const response = await axios.post(`https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes/${quiz?.id}/result`, formattedOptions);
 

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 function Login() {
+    // eslint-disable-next-line no-unused-vars
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState(null);
     const login = useGoogleLogin({// Replace with your Google Client ID

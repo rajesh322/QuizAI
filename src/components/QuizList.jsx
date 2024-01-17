@@ -15,18 +15,18 @@ const QuizList = () => {
                 console.error('Error fetching quizzes:', error);
                 // Handle errors here
             }
-            try {
-                // Check if a JWT token exists in cookies
-                let token = Cookies.get('auth_token');
-                console.log('Token:', token);
-                if (!token) {
-                    // If there's no token, redirect the user to the login page
-                    window.location.href = 'https://testmindsai.tech/login';
-                    throw new Error('No valid JWT token found.');
-                }
-            } catch (error) {
-                console.error('Error verifying JWT token:', error);
-            }
+            // try {
+            //     // Check if a JWT token exists in cookies
+            //     let token = Cookies.get('auth_token');
+            //     console.log('Token:', token);
+            //     if (!token) {
+            //         // If there's no token, redirect the user to the login page
+            //         window.location.href = 'https://testmindsai.tech/login';
+            //         throw new Error('No valid JWT token found.');
+            //     }
+            // } catch (error) {
+            //     console.error('Error verifying JWT token:', error);
+            // }
         };
         fetchQuizzes();
     }, []);

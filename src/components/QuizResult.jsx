@@ -18,18 +18,18 @@ const QuizResult = () => {
                 console.error('Error fetching quiz result:', error);
                 // Handle errors here
             }
-            try {
-                // Check if a JWT token exists in cookies
-                let token = Cookies.get('auth_token');
-                console.log('Token:', token);
-                if (!token) {
-                    // If there's no token, redirect the user to the login page
-                    window.location.href = process.env.REACT_APP_FRONTEND_URL;
-                    throw new Error('No valid JWT token found.');
-                }
-            } catch (error) {
-                console.error('Error verifying JWT token:', error);
-            }
+            // try {
+            //     // Check if a JWT token exists in cookies
+            //     let token = Cookies.get('auth_token');
+            //     console.log('Token:', token);
+            //     if (!token) {
+            //         // If there's no token, redirect the user to the login page
+            //         window.location.href = process.env.REACT_APP_FRONTEND_URL;
+            //         throw new Error('No valid JWT token found.');
+            //     }
+            // } catch (error) {
+            //     console.error('Error verifying JWT token:', error);
+            // }
         };
         fetchQuizResult();
     }, [id]);
