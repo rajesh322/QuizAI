@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../css/quizlist.css';
+import Googleads from './googleads';
 
 const QuizList = () => {
     const [quizzes, setQuizzes] = useState([]);
@@ -48,6 +49,7 @@ const QuizList = () => {
                     </li>
                 ))}
             </ul>
+            {/* <Googleads /> */}
         </div>
     );
 };

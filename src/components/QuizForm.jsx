@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import '../css/quizform.css';
+import Googleads from './googleads';
+
 const QuizForm = () => {
     const [quizName, setQuizName] = useState('');
     const [questions, setQuestions] = useState([
@@ -215,6 +217,7 @@ const QuizForm = () => {
 
     return (
         <div className="container mt-4">
+            {/* <Googleads/> */}
             <h2 className="text-center mb-4">Create a New Quiz</h2>
             <div className="mb-3">
                 <ul className="nav nav-tabs">
