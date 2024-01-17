@@ -7,6 +7,8 @@ import  Login from './components/Login';
 import Navbar from "./components/Navbar.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 import Result from "./components/Result.jsx";
+import Landing from './components/landing.jsx';
+
 const App = () => {
     return (
         <Router>
@@ -19,8 +21,9 @@ const App = () => {
                         <Route path="/quizzes" element={<QuizList />} />
                         <Route path="/quiz/:id/result" element={<QuizResult />} />
                         <Route path="/create" element={<QuizForm />} />
-                        <Route path="/" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
                         <Route path="/profile" element={<Result />} />
+                        <Route path="/" element={<Landing />} />
                     </Routes>
                 </div>
             </div>

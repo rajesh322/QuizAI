@@ -20,7 +20,7 @@ const QuizResult = () => {
             }
             try {
                 // Check if a JWT token exists in cookies
-                let token = Cookies.get('authToken');
+                let token = Cookies.get('auth_token');
                 console.log('Token:', token);
                 if (!token) {
                     // If there's no token, redirect the user to the login page

@@ -69,9 +69,6 @@ const QuizForm = () => {
         }
     };
 
-    const handleSwitchForm = (formType) => {
-        setSelectedForm(formType);
-    };
 
     const handleGenerateSubmit = async (e) => {
         e.preventDefault();
