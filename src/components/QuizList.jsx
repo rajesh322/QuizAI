@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import process from 'process';
-
 
 const QuizList = () => {
     const [quizzes, setQuizzes] = useState([]);
