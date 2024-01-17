@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const QuizForm = () => {
     const [quizName, setQuizName] = useState('');
@@ -205,7 +204,7 @@ const QuizForm = () => {
                             <input type="text" className="form-control" id="Topic1" />
                         </div>
                         <button type="submit" className="btn btn-success" onClick={handleGenerateSubmit}>
-                            Submit SwitchForm
+                            Submit
                         </button>
                     </form>
                 );
