@@ -83,7 +83,7 @@ const QuizForm = () => {
         console.log('topicValue:', topicValue);
         try {
             // Make an API call with the difficulty and topic
-            const response = await axios.post('http://localhost:8081/api/quiz/generate', {
+            const response = await axios.post('https://lets-quiz-09de6b417d2a.herokuapp.com/api/quizzes/generate', {
                 difficulty: dropdownValue,
                 topic: topicValue,
             });
