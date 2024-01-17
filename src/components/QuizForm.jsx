@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-
+import '../css/quizform.css';
 const QuizForm = () => {
     const [quizName, setQuizName] = useState('');
     const [questions, setQuestions] = useState([
@@ -221,7 +221,6 @@ const QuizForm = () => {
                     <li className="nav-item">
                         <p
                             className={`nav-link ${selectedForm === 'createQuiz' ? 'active' : ''}`}
-                            style={{ color: selectedForm === 'createQuiz' ? 'blue' : 'black' }}
                             onClick={() => setSelectedForm('createQuiz')}
                         >
                             Create Quiz
@@ -230,7 +229,6 @@ const QuizForm = () => {
                     <li className="nav-item">
                         <p
                             className={`nav-link ${selectedForm === 'switchForm' ? 'active' : ''}`}
-                            style={{ color: selectedForm === 'switchForm' ? 'blue' : 'black' }}
                             onClick={() => setSelectedForm('switchForm')}
                         >
                             Generate a Quiz
@@ -242,6 +240,5 @@ const QuizForm = () => {
         </div>
     );
 };
-
 
 export default QuizForm;
