@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {HashRouter as Router, Route, Routes} from 'react-router-dom';
 import QuizForm from './components/QuizForm';
 import QuizList from './components/QuizList';
 import QuizDetail from './components/QuizDetail';
@@ -6,7 +6,7 @@ import QuizResult from './components/QuizResult'; // Import the QuizResult compo
 import  Login from './components/Login';
 import Navbar from "./components/Navbar.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
-import Profile from "./components/Profile.jsx";
+import Result from "./components/Result.jsx";
 const App = () => {
     return (
         <Router>
@@ -20,7 +20,7 @@ const App = () => {
                         <Route path="/quiz/:id/result" element={<QuizResult />} />
                         <Route path="/create" element={<QuizForm />} />
                         <Route path="/" element={<Login />} />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/profile" element={<Result />} />
                     </Routes>
                 </div>
             </div>

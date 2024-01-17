@@ -12,11 +12,11 @@ const QuizForm = () => {
     useEffect(() => {
         try {
             // Check if a JWT token exists in cookies
-            let token = Cookies.get('authToken');
+            let token = Cookies.get('auth_token');
             console.log('Token:', token);
             if (!token) {
                 // If there's no token, redirect the user to the login page
-                window.location.href = 'https://testmindsai.tech';
+                window.location.href = 'https://testmindsai.tech/login';
                 throw new Error('No valid JWT token found.');
             }
         } catch (error) {

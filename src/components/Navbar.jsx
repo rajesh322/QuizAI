@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import process from 'process';
+import axios from 'axios';
 
 function Navbar() {
     const [user, setUser] = useState(null);
@@ -10,27 +12,23 @@ function Navbar() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const storedToken = Cookies.get('auth_token');
                 // Check if a JWT token exists in cookies
-                let token = Cookies.get('authToken');
-                console.log('Token:', token);
-                if (!token) {
-                    // If there's no token, no need to fetch user data
-                    setLoading(false);
-                    return;
+                if (storedToken) {
+                    // Use the stored token for API requests
+                    axios
+                        .get(`https://openidconnect.googleapis.com/v1/userinfo?access_token=${storedToken}`, {
+                            headers: {
+                                Authorization: `Bearer ${storedToken}`,
+                                Accept: 'application/json'
+                            }
+                        })
+                        .then((res) => {
+                            setUser(res.data);
+                            console.log(res.data);
+                        })
+                        .catch((err) => console.log(err));
                 }
-
-                // Validate the JWT token on the server
-                const response = await fetch('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                console.log("response: ",response)
-                setUser(response.data.user);
-                console.log("pic url: ",response.data.user.photos[0].value)
-                console.log('Profile data received:', response.data.user);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
                 // Handle error if needed
@@ -43,10 +41,10 @@ function Navbar() {
 
     const handleLogout = () => {
         // Clear the JWT token from cookies
-        Cookies.remove('authToken');
+        Cookies.remove('auth_token');
 
         // Redirect the user to the login page
-        window.location.href = 'https://testmindsai.tech';
+        window.location.href = 'https://testmindsai.tech/login' ;
     };
 
     const handleToggleUserMenu = () => {
@@ -62,6 +60,9 @@ function Navbar() {
                 <Link className="navbar-brand" to="/create">
                     Create Quiz
                 </Link>
+                <Link className="navbar-brand" to="/profile">
+                    Results
+                </Link>
                 <div className="ml-auto d-flex align-items-center"> {/* Container for name, image, and logout button */}
                     {loading ? (
                         <p>Loading...</p>
@@ -70,7 +71,7 @@ function Navbar() {
                             <div className="mr-3">
                                 {/* Image placeholder for the user's avatar */}
                                 <img
-                                    src={ user.photos[0].value || 'placeholder.jpg'}
+                                    src={ user.picture || 'placeholder.jpg'}
                                     alt="User Avatar"
                                     className="rounded-circle"
                                     style={{ width: '40px', height: '40px' }}
@@ -82,7 +83,7 @@ function Navbar() {
                                 <div className="dropdown">
                                     <div className={`dropdown-menu ${showUserMenu ? 'show' : ''}`} aria-labelledby="userDropdown">
                                         <button className="dropdown-item" onClick={() => {window.location.href = 'https://testmindsai.tech/profile'}}>
-                                            {user.displayName}
+                                            {user.name}
                                         </button>
                                         <button className="dropdown-item" onClick={handleLogout}>
                                             Logout

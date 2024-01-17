@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import process from 'process';
 
 const QuizResult = () => {
     const id = useParams().id;
@@ -23,7 +24,7 @@ const QuizResult = () => {
                 console.log('Token:', token);
                 if (!token) {
                     // If there's no token, redirect the user to the login page
-                    window.location.href = 'https://testmindsai.tech';
+                    window.location.href = process.env.REACT_APP_FRONTEND_URL;
                     throw new Error('No valid JWT token found.');
                 }
             } catch (error) {

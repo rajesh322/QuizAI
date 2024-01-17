@@ -1,28 +1,40 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import process from 'process';
 
 const Profile = () => {
     const [quizResults, setQuizResults] = useState([]);
-    const [usermail, setusermail] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [email, setEmail] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
+
+
             try {
-                let token = Cookies.get('authToken');
-                if (!token) {
-                    window.location.href = 'https://testmindsai.tech';
-                    throw new Error('No valid JWT token found.');
+                const storedToken = Cookies.get('auth_token');
+                // Check if a JWT token exists in cookies
+                if (storedToken) {
+                    // Use the stored token for API requests
+                    axios
+                        .get(`https://openidconnect.googleapis.com/v1/userinfo?access_token=${storedToken}`, {
+                            headers: {
+                                Authorization: `Bearer ${storedToken}`,
+                                Accept: 'application/json'
+                            }
+                        })
+                        .then((res) => {
+                            setEmail(res.data.email);
+                            console.log(res.data);
+                        })
+                        .catch((err) => console.log(err));
                 }
-                const response = await axios.get('https://coral-app-rgl66.ondigitalocean.app/auth/profile', {
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setusermail(response.data.user.emails[0].value);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
+                // Handle error if needed
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -40,10 +52,10 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        if (usermail) {
-            fetchQuizResults(usermail);
+        if (email) {
+            fetchQuizResults(email);
         }
-    }, [usermail]);
+    }, [email]);
 
     return (
         <div>
