@@ -94,9 +94,12 @@ const QuizDetail = () => {
                             ))}
                         </div>
                         {submitted && (
-                            <p className={`mt-2 ${selectedOptions[index] === question.correctOption ? 'text-success' : 'text-danger'}`}>
-                                Your choice: {selectedOptions[index]}
-                            </p>
+                            <div>
+                                <p className={`mt-2 ${selectedOptions[index] === question.correctOption ? 'text-success' : 'text-danger'}`}>
+                                    Your choice: {selectedOptions[index]}
+                                </p>
+                                <p className="mt-2">Explanation: {question.explanation}</p>
+                            </div>
                         )}
                     </div>
                 ))}
