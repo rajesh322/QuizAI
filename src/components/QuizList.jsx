@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../css/quizlist.css';
-import Googleads from './googleads';
+//import Googleads from './googleads';
 import { API_URL } from '../constants';
 
 const QuizList = () => {
@@ -40,6 +40,8 @@ const QuizList = () => {
         .sort((a, b) => {
             if (sortBy === 'date') {
                 return new Date(a.date) - new Date(b.date);
+            } else if (sortBy === 'questions') {
+                return a.questions.length - b.questions.length; // Convert string representations to numbers for sorting
             } else {
                 return a[sortBy].localeCompare(b[sortBy]);
             }

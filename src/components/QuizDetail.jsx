@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { API_URL } from '../constants';
 
 const QuizDetail = () => {
     const id = useParams().id;
-    const navigate = useNavigate();
     const [quiz, setQuiz] = useState(null);
     const [selectedOptions, setSelectedOptions] = useState({});
     const [submitted, setSubmitted] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
     const [result, setResult] = useState(null);
 
     useEffect(() => {
@@ -57,13 +55,32 @@ const QuizDetail = () => {
     if (!quiz) {
         return <div>Loading...</div>;
     }
-
+    const getResultMessage = () => {
+        if (result.correctAnswers === result.totalQuestions) {
+            return 'Congratulations! You got a perfect score!';
+        } else if (result.correctAnswers >= result.totalQuestions / 2) {
+            return 'Well done! You did a good job!';
+        } else {
+            return 'Keep practicing! You\'ll improve!';
+        }
+    };
     return (
         <div className="container mt-4">
-            <h2 className="text-center mb-4">{quiz.quizName}</h2>
+            {submitted && result && (
+                <div className="text-center mb-4">
+                            <div className="quiz-result">
+                    <h4 className="text-center mb-4">Your Quiz Result</h4>
+                    <p className="lead">
+                        <h1 className="display-6">Score: {result.correctAnswers} / {result.totalQuestions}</h1>
+                    </p>
+                    <p>{getResultMessage()}</p>
+                </div>
+                </div>
+            )}
+
             <form>
                 {quiz.questions.map((question, index) => (
-                    <div key={index} className="mb-4 border p-3">
+                    <div key={index} className={`mb-4 border p-3 ${submitted ? 'options' : ''}`}>
                         <p className="lead">{`Question ${index + 1}: ${question.question}`}</p>
                         <div className="row row-cols-2">
                             {question.options.map((option, optionIndex) => (
@@ -108,15 +125,6 @@ const QuizDetail = () => {
                     <button type="button" className="btn btn-primary" onClick={handleSubmit}>
                         Submit Quiz
                     </button>
-                )}
-
-                {submitted && (
-                    <div className="mt-3">
-                        <h4>Quiz Result</h4>
-                        <p>
-                            {result.correctAnswers} out of {result.totalQuestions} correct
-                        </p>
-                    </div>
                 )}
             </form>
         </div>

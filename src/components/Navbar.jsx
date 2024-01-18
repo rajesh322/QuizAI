@@ -36,8 +36,11 @@ function Navbar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
-                <Link className="navbar-brand" to="/quizzes">
+                <Link className="navbar-brand" to="/">
                     Home
+                </Link>
+                <Link className="navbar-brand" to="/quizzes">
+                    Quizzes
                 </Link>
                 <Link className="navbar-brand" to="/create">
                     Create Quiz

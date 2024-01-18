@@ -1,4 +1,4 @@
-import {HashRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import QuizForm from './components/QuizForm';
 import QuizList from './components/QuizList';
 import QuizDetail from './components/QuizDetail';
@@ -7,7 +7,7 @@ import QuizResult from './components/QuizResult'; // Import the QuizResult compo
 import Navbar from "./components/Navbar.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 // import Result from "./components/Result.jsx";
-//import Landing from './components/landing.jsx';
+import Landing from './components/landing.jsx';
 
 const App = () => {
     return (
@@ -23,7 +23,7 @@ const App = () => {
                         <Route path="/create" element={<QuizForm />} />
                         {/* <Route path="/login" element={<Login />} /> */}
                         {/* <Route path="/profile" element={<Result />} /> */}
-                        {/* <Route path="/" element={<Landing />} /> */}
+                        <Route path="/" element={<Landing />} />
                     </Routes>
                 </div>
             </div>

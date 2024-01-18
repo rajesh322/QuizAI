@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import '../css/quizform.css';
-import Googleads from './googleads';
+//import Googleads from './googleads';
 import { API_URL } from '../constants';
 
 const QuizForm = () => {
@@ -227,14 +227,16 @@ const QuizForm = () => {
                     <li className="nav-item">
                         <p
                             className={`nav-link ${selectedForm === 'createQuiz' ? 'active' : ''}`}
+                            style={{ color: selectedForm === 'createQuiz' ? 'blue' : 'black' }}
                             onClick={() => setSelectedForm('createQuiz')}
                         >
                             Create Quiz
                         </p>
                     </li>
                     <li className="nav-item">
-                        <p
+                    <p
                             className={`nav-link ${selectedForm === 'switchForm' ? 'active' : ''}`}
+                            style={{ color: selectedForm === 'switchForm' ? 'blue' : 'black' }}
                             onClick={() => setSelectedForm('switchForm')}
                         >
                             Generate a Quiz
