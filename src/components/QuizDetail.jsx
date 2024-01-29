@@ -52,6 +52,10 @@ const QuizDetail = () => {
             // Handle errors here
         }
     };
+    const sanitizeOptions = {
+      allowedTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'strong', 'em', 'pre'],
+      disallowedTagsMode: 'discard'
+    };
 
     if (!quiz) {
         return <div>Loading...</div>;
@@ -85,7 +89,10 @@ const QuizDetail = () => {
           {quiz.questions.map((question, index) => (
             <div key={index} className={`mb-4 border p-3 ${submitted ? 'options' : ''}`}>
               <p className="lead">{`Question ${index + 1}:`}</p>
-              <Markdown>{question.question}</Markdown>
+              {/* Render Markdown content with sanitization */}
+              <Markdown options={sanitizeOptions}>
+                {question.question.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+              </Markdown>
               <div className="row row-cols-2">
                 {question.options.map((option, optionIndex) => (
                   <div key={optionIndex} className="col mb-2">
@@ -108,7 +115,8 @@ const QuizDetail = () => {
                         }`}
                         htmlFor={`option${index}-${optionIndex}`}
                       >
-                        <Markdown>{option}</Markdown>
+                        {/* Use <pre> tag to display HTML tags as text */}
+                        <pre>{option}</pre>
                       </label>
                     </div>
                   </div>
@@ -119,8 +127,9 @@ const QuizDetail = () => {
                   <p className={`mt-2 ${selectedOptions[index] === question.correctOption ? 'text-success' : 'text-danger'}`}>
                     Your choice: {selectedOptions[index]}
                   </p>
+                  {/* Render Markdown content with sanitization */}
                   <p className="mt-2">
-                    Explanation: <Markdown>{question.explanation}</Markdown>
+                    Explanation: <Markdown options={sanitizeOptions}>{question.explanation}</Markdown>
                   </p>
                 </div>
               )}
