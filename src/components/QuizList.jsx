@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../css/quizlist.css';
-//import Googleads from './googleads';
 import { API_URL } from '../constants';
 
 const QuizList = () => {
     const [quizzes, setQuizzes] = useState([]);
     const [sortBy, setSortBy] = useState('quizName');
     const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
 
     useEffect(() => {
         const fetchQuizzes = async () => {
@@ -24,7 +24,10 @@ const QuizList = () => {
     }, []);
 
     const handleSortChange = (e) => {
-        setSortBy(e.target.value);
+        const selectedSortBy = e.target.value;
+        setSortBy(selectedSortBy);
+        // Toggle sort order if the same sort option is selected again
+        setSortOrder(selectedSortBy === sortBy ? (sortOrder === 'asc' ? 'desc' : 'asc') : 'asc');
     };
 
     const handleSearchChange = (e) => {
@@ -36,16 +39,19 @@ const QuizList = () => {
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
+    const compareFunction = (a, b) => {
+        let comparison = 0;
+        if (sortBy === 'date') {
+            comparison = new Date(a.date) - new Date(b.date);
+        } else if (sortBy === 'questions') {
+            comparison = a.questions.length - b.questions.length;
+        } else {
+            comparison = a[sortBy].localeCompare(b[sortBy]);
+        }
+        return sortOrder === 'asc' ? comparison : -comparison;
+    };
+
     const filteredQuizzes = quizzes
-        .sort((a, b) => {
-            if (sortBy === 'date') {
-                return new Date(a.date) - new Date(b.date);
-            } else if (sortBy === 'questions') {
-                return a.questions.length - b.questions.length; // Convert string representations to numbers for sorting
-            } else {
-                return a[sortBy].localeCompare(b[sortBy]);
-            }
-        })
         .filter((quiz) => {
             const searchRegex = new RegExp(searchTerm, 'i');
             return (
@@ -54,7 +60,8 @@ const QuizList = () => {
                 searchRegex.test(quiz.date) ||
                 searchRegex.test(quiz.questions.length.toString())
             );
-        });
+        })
+        .sort(compareFunction);
 
     return (
         <div className="container mt-4">
@@ -68,8 +75,10 @@ const QuizList = () => {
                     <option value="quizName">Quiz Name</option>
                     <option value="date">Date</option>
                     <option value="questions">Number of Questions</option>
-                    {/* Add more options based on your data structure */}
                 </select>
+                <button className="btn btn-sm btn-light" onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
+                    {sortOrder === 'asc' ? '▲' : '▼'}
+                </button>
             </div>
 
             <div className="mb-3">
@@ -100,7 +109,6 @@ const QuizList = () => {
                     </li>
                 ))}
             </ul>
-            {/* <Googleads /> */}
         </div>
     );
 };
