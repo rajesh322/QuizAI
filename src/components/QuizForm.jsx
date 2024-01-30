@@ -3,6 +3,9 @@ import axios from 'axios';
 import '../css/quizform.css';
 //import Googleads from './googleads';
 import { API_URL } from '../constants';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 
 const QuizForm = () => {
     const [quizName, setQuizName] = useState('');
@@ -10,6 +13,9 @@ const QuizForm = () => {
         { question: '', options: ['', '', '', ''], correctOption: '' },
     ]);
     const [selectedForm, setSelectedForm] = useState('createQuiz'); // Default to createQuiz form
+    const [isLoading, setIsLoading] = useState(false); // State to track loading
+    const [showModal, setShowModal] = useState(false);
+    const [quizId, setQuizId] = useState(null); // State to store quizId
 
     // useEffect(() => {
     //     try {
@@ -56,48 +62,60 @@ const QuizForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
         try {
-            const currentDateAndTime = new Date(); // Get the current date and time
-            console.log('currentDateAndTime:', currentDateAndTime);
+            const currentDateAndTime = new Date();
+            setIsLoading(true);
             const response = await axios.post(API_URL + '/quizzes', {
                 quizName,
                 questions,
-                date: currentDateAndTime.toISOString(), // Convert to ISO format
+                date: currentDateAndTime.toISOString(),
             });
-    
             console.log('Quiz created:', response.data);
-            // Handle success, reset the form, or redirect as needed
+            setQuizId(response.data.id); // Store the quizId
+            setShowModal(true);
+            // Handle success
         } catch (error) {
             console.error('Error creating quiz:', error);
-            // Handle errors here
+            // Handle errors
+        } finally {
+            setIsLoading(false);
         }
     };
 
-
     const handleGenerateSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setShowModal(true);
 
-        // Assuming you have fields in the switchForm, adjust this part accordingly
         const dropdownValue = document.getElementById('dropdown1').value;
         const topicValue = document.getElementById('Topic1').value;
-        console.log('dropdownValue:', dropdownValue);
-        console.log('topicValue:', topicValue);
+
         try {
-            // Make an API call with the difficulty and topic
             const response = await axios.post(API_URL + '/quizzes/generate', {
                 difficulty: dropdownValue,
                 topic: topicValue,
             });
-
             console.log('Quiz generated:', response.data);
-            // Handle success, reset the form, or redirect as needed
+            console.log(response.data.id);
+            setQuizId(response.data.id); // Store the quizId
+            console.log(quizId);
+            // Handle success
         } catch (error) {
             console.error('Error generating quiz:', error);
-            // Handle errors here
+            // Handle errors
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
 
+    const handleAttemptQuiz = () => {
+        setShowModal(false); // Close modal before redirecting
+        // Redirect or perform actions to start attempting the quiz using the quizId
+        console.log("Attempting quiz with quizId:", quizId);
+        // Redirect or perform actions to start attempting the quiz using the quizId
+        // For example, you can redirect to a route where the quiz is displayed
+        window.location.href = '/quiz/' + quizId;
+    };
     const renderForm = () => {
         switch (selectedForm) {
             case 'createQuiz':
@@ -245,6 +263,24 @@ const QuizForm = () => {
                 </ul>
             </div>
             {renderForm()}
+            <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                <Modal.Body>
+                    {isLoading ? (
+                        <div className="text-center">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="">Generating your Quiz...</span>
+                            </div>
+                        </div>
+                    ) : quizId ? (
+                            <div className="text-center">
+                                <p>Quiz generated successfully! Would you like to attempt the quiz?</p>
+                                <Button variant="primary" onClick={handleAttemptQuiz}>
+                                    Attempt Quiz
+                                </Button>
+                            </div>
+                    ) : null}
+                </Modal.Body>
+            </Modal>
         </div>
     );
 };
