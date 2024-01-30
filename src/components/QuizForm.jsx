@@ -268,8 +268,9 @@ const QuizForm = () => {
                     {isLoading ? (
                         <div className="text-center">
                             <div className="spinner-border text-primary" role="status">
-                                <span className="">Generating your Quiz...</span>
+                                <span className="visually-hidden">Generating your Quiz...</span>
                             </div>
+                            <p>Generating your Quiz...</p>
                         </div>
                     ) : quizId ? (
                             <div className="text-center">
