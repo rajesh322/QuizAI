@@ -1,0 +1,43 @@
+.options-container {
+    max-width: 600px; /* Adjust the max-width as per your layout */
+    overflow-wrap: break-word;
+    display: block;
+    word-break: break-all;
+}
+.quiz-question {
+    margin-bottom: 70px; /* Increased margin for more spacing */
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.quiz-option {
+    margin-bottom: 10px;
+}
+
+.quiz-option label {
+    display: block;
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.quiz-result {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.quiz-result p {
+    margin-bottom: 10px;
+}
+
+.quiz-result h4 {
+    margin-bottom: 20px;
+}
+
+.quiz-result p:last-child {
+    margin-bottom: 0;
+}
+
