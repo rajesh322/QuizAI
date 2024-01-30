@@ -45,6 +45,9 @@ function Navbar() {
                 <Link className="navbar-brand" to="/create">
                     Create Quiz
                 </Link>
+                <Link className="navbar-brand" to="/stats">
+                    Statistics
+                </Link>
             </div>
         </nav>
     );

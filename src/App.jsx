@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar.jsx";
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap styles
 // import Result from "./components/Result.jsx";
 import Landing from './components/landing.jsx';
+import Stats from './components/Stats.jsx';
 
 const App = () => {
     return (
@@ -15,7 +16,7 @@ const App = () => {
             <div>
                 <Navbar/>
                 <div className="container mt-4">
-                    <h1 className="text-center">Quiz App</h1>
+                    <h1 className="text-center">TestMindsAI</h1>
                     <Routes>
                         <Route path="/quiz/:id" element={<QuizDetail />} />
                         <Route path="/quizzes" element={<QuizList />} />
@@ -24,6 +25,7 @@ const App = () => {
                         {/* <Route path="/login" element={<Login />} /> */}
                         {/* <Route path="/profile" element={<Result />} /> */}
                         <Route path="/" element={<Landing />} />
+                        <Route path="/stats" element={<Stats />} />
                     </Routes>
                 </div>
             </div>

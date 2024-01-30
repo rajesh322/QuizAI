@@ -5,10 +5,10 @@
     word-break: break-all;
 }
 .quiz-question {
-    margin-bottom: 70px; /* Increased margin for more spacing */
-    padding: 15px;
+    margin-bottom: 20px; /* Increased margin for more spacing */
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .quiz-option {
