@@ -99,7 +99,7 @@ const QuizList = () => {
                 {filteredQuizzes.map((quiz) => (
                     <li key={quiz.id} className="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <Link to={`/quiz/${quiz.id}`} className="text-decoration-none">
+                            <Link to={`/quiz/${quiz._id}`} className="text-decoration-none">
                                 <h5>{quiz.quizName}</h5>
                                 <p>{quiz.description}</p>
                                 <span className='badge bg-primary rounded-pill ms-2'>{quiz.questions.length} Questions</span>

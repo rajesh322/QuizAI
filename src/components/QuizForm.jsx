@@ -15,7 +15,7 @@ const QuizForm = () => {
     const [selectedForm, setSelectedForm] = useState('createQuiz'); // Default to createQuiz form
     const [isLoading, setIsLoading] = useState(false); // State to track loading
     const [showModal, setShowModal] = useState(false);
-    const [quizId, setQuizId] = useState(null); // State to store quizId
+    const [quizId, setQuizId] = useState(''); // State to store quizId
 
     // useEffect(() => {
     //     try {
@@ -89,15 +89,17 @@ const QuizForm = () => {
 
         const dropdownValue = document.getElementById('dropdown1').value;
         const topicValue = document.getElementById('Topic1').value;
+        const questionCount = document.getElementById('questionCount').value;
 
         try {
             const response = await axios.post(API_URL + '/quizzes/generate', {
                 difficulty: dropdownValue,
                 topic: topicValue,
+                numberOfQuestions: questionCount
             });
             console.log('Quiz generated:', response.data);
-            console.log(response.data.id);
-            setQuizId(response.data.id); // Store the quizId
+            console.log(response.data._id);
+            setQuizId(response.data._id); // Store the quizId
             console.log(quizId);
             // Handle success
         } catch (error) {
@@ -212,7 +214,7 @@ const QuizForm = () => {
                         {/* Add fields, dropdowns, or any other controls specific to switchForm */}
                         <div className="mb-3">
                             <label htmlFor="dropdown1" className="form-label">
-                                Dropdown 1:
+                                Difficulty Level:
                             </label>
                             <select className="form-select" id="dropdown1">
                                 {/* Add options for dropdown 1 */}
@@ -226,6 +228,17 @@ const QuizForm = () => {
                                 Topic
                             </label>
                             <input type="text" className="form-control" id="Topic1" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="questionCount" className="form-label">
+                                Number of Questions
+                            </label>
+                            <select className="form-select" id="questionCount">
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                            </select>
                         </div>
                         <button type="submit" className="btn btn-success" onClick={handleGenerateSubmit}>
                             Submit

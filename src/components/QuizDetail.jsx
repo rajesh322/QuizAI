@@ -32,24 +32,35 @@ const QuizDetail = () => {
         }));
     };
 
+    const calculateLocalResult = () => {
+        let correct = 0;
+        quiz.questions.forEach((question, index) => {
+            if (selectedOptions[index] === question.correctOption) {
+                correct += 1;
+            }
+        });
+        return {
+            correctAnswers: correct,
+            totalQuestions: quiz.questions.length
+        };
+    };
+
     const handleSubmit = async () => {
         try {
-            // Convert selectedOptions to the desired format
+            // Calculate local result first
+            const localResult = calculateLocalResult();
+            setResult(localResult);
+            setSubmitted(true);
+
+            // Still send to server for tracking/validation
             let formattedOptions = Object.keys(selectedOptions).reduce((acc, key) => {
                 acc[key] = selectedOptions[key];
                 return acc;
             }, {});
-            console.log('Submitting quiz:', formattedOptions);
-            const response = await axios.post(API_URL + `/quizzes/${quiz?.id}/result`, formattedOptions);
-
-            console.log('Quiz submitted:', response.data);
-
-            // Store the result and set the submitted flag
-            setResult(response.data);
-            setSubmitted(true);
+            
+            await axios.post(API_URL + `/quizzes/${quiz?._id}/result`, formattedOptions);
         } catch (error) {
             console.error('Error submitting quiz:', error);
-            // Handle errors here
         }
     };
 
@@ -121,14 +132,15 @@ const QuizDetail = () => {
                     </div>
                     {submitted && (
                         <div>
-                            <p
-                                className={`mt-2 ${
-                                    selectedOptions[index] === question.correctOption
-                                        ? 'text-success'
-                                        : 'text-danger'
-                                }`}
-                            >
+                            <p className={`mt-2 ${
+                                selectedOptions[index] === question.correctOption
+                                    ? 'text-success'
+                                    : 'text-danger'
+                            }`}>
                                 Your choice: {selectedOptions[index]}
+                                {selectedOptions[index] === question.correctOption ? 
+                                    ' ✓ Correct!' : 
+                                    ` ✗ Incorrect. Correct answer: ${question.correctOption}`}
                             </p>
                             {/* Render Markdown content for the explanation */}
                             <p className="mt-2">
