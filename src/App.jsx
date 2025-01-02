@@ -1,4 +1,5 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/react";
 import QuizForm from './components/QuizForm';
 import QuizList from './components/QuizList';
 import QuizDetail from './components/QuizDetail';
@@ -28,6 +29,7 @@ const App = () => {
                         <Route path="/stats" element={<Stats />} />
                     </Routes>
                 </div>
+                <Analytics />
             </div>
         </Router>
     );
